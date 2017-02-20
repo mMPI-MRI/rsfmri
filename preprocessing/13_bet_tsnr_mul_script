@@ -1,0 +1,36 @@
+
+
+##### 1st bet on tsnr image: 
+
+
+bet /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d6_unwarped_tsnr_unwarped_mni.nii.gz /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d6_unwarped_tsnr_unwarped_mni_bet.nii.gz
+
+###### or better in shell: 
+
+cd /nobackup/eminem2/schmidt/MMPIRS/preprocessing/
+
+
+for ID in P?? ; do cmd1="bet /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d0_unwarped_tsnr_unwarped_mni.nii.gz /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d0_unwarped_tsnr_unwarped_mni_bet.nii.gz"; cmd2="bet /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d1_unwarped_tsnr_unwarped_mni.nii.gz /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d1_unwarped_tsnr_unwarped_mni_bet.nii.gz"; cmd3="bet /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d2_unwarped_tsnr_unwarped_mni.nii.gz /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d2_unwarped_tsnr_unwarped_mni_bet.nii.gz"; cmd4="bet /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d5_unwarped_tsnr_unwarped_mni.nii.gz /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d5_unwarped_tsnr_unwarped_mni_bet.nii.gz"; cmd5="bet /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d6_unwarped_tsnr_unwarped_mni.nii.gz /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d6_unwarped_tsnr_unwarped_mni_bet.nii.gz";echo $cmd1;echo $cmd2 ;echo $cmd3;echo $cmd4 ;echo $cmd5; done
+
+
+
+#### 2nd mul tsnr_bet thr 10 with wm mask
+
+fslmaths /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d6_unwarped_tsnr_unwarped_mni_bet.nii.gz -thr 10 -bin -mul /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/segmentation/${ID}_d6_S*_MP2RAGE_0p7_T1_Images_Te2_clone_transform_strip_clone_reg*_bound_seg_binmask_WM.nii.gz /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/segmentation/${ID}_d6_MP2RAGE_0p7_T1_Images_Te2_clone_transform_strip_clone_reg_bound_seg_binmask_WM_corrected.nii.gz
+
+
+
+###### or better in shell: 
+
+cd /nobackup/eminem2/schmidt/MMPIRS/preprocessing/
+
+
+for ID in P?? ; do cmd1="fslmaths /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d0_unwarped_tsnr_unwarped_mni_bet.nii.gz -thr 10 -bin -mul /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/segmentation/${ID}_d0_*_MP2RAGE_0p7_T1_Images_Te2_clone_transform_strip_clone_reg*_bound_seg_binmask_WM.nii.gz /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/segmentation/${ID}_d0_MP2RAGE_0p7_T1_Images_Te2_clone_transform_strip_clone_reg_bound_seg_binmask_WM_corrected.nii.gz"; cmd2="fslmaths /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d1_unwarped_tsnr_unwarped_mni_bet.nii.gz -thr 10 -bin -mul /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/segmentation/${ID}_d1_*_MP2RAGE_0p7_T1_Images_Te2_clone_transform_strip_clone_reg*_bound_seg_binmask_WM.nii.gz /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/segmentation/${ID}_d1_MP2RAGE_0p7_T1_Images_Te2_clone_transform_strip_clone_reg_bound_seg_binmask_WM_corrected.nii.gz"; cmd3="fslmaths /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d2_unwarped_tsnr_unwarped_mni_bet.nii.gz -thr 10 -bin -mul /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/segmentation/${ID}_d2_*_MP2RAGE_0p7_T1_Images_Te2_clone_transform_strip_clone_reg*_bound_seg_binmask_WM.nii.gz /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/segmentation/${ID}_d2_MP2RAGE_0p7_T1_Images_Te2_clone_transform_strip_clone_reg_bound_seg_binmask_WM_corrected.nii.gz"; cmd4="fslmaths /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d5_unwarped_tsnr_unwarped_mni_bet.nii.gz -thr 10 -bin -mul /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/segmentation/${ID}_d5_*_MP2RAGE_0p7_T1_Images_Te2_clone_transform_strip_clone_reg*_bound_seg_binmask_WM.nii.gz /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/segmentation/${ID}_d5_MP2RAGE_0p7_T1_Images_Te2_clone_transform_strip_clone_reg_bound_seg_binmask_WM_corrected.nii.gz"; cmd5="fslmaths /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/average/${ID}_d6_unwarped_tsnr_unwarped_mni_bet.nii.gz -thr 10 -bin -mul /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/segmentation/${ID}_d6_*_MP2RAGE_0p7_T1_Images_Te2_clone_transform_strip_clone_reg*_bound_seg_binmask_WM.nii.gz /nobackup/eminem2/schmidt/MMPIRS/preprocessing/${ID}/segmentation/${ID}_d6_MP2RAGE_0p7_T1_Images_Te2_clone_transform_strip_clone_reg_bound_seg_binmask_WM_corrected.nii.gz";echo $cmd1;echo $cmd2 ;echo $cmd3;echo $cmd4 ;echo $cmd5; done
+
+
+
+
+
+
+
+
