@@ -1,49 +1,91 @@
 
-
 ###### SCRIPTS #######
 
-#### note that all 4 letter subject ID's have been changed to XXXX  and need to be changed back manually - relevant for steps: 3,4,5,6-10,11
-#### note that scripts are mostly separate for each participant - sometimes even for each timepoint -- check "batches" for faster calculation 
+#### note that all 4 letter subject ID's have been changed to XXXX.
+#### note that scripts are mostly separate for each participant - sometimes even for each timepoint -- 
 
-#### 1. Segmentations - CBSTOOLS – whole brain  - ##### (01_P46_whole_brain-segmentation-longitudinal.LayoutXML)
+#### 1. Segmentations - CBSTOOLS – whole brain  - ##### 
 
-#### 2. Segmentations - CBSTOOLS - separate WM – GM – CSF -(02_P46_CSF_GM_WM_segmentations.LayoutXML)
+01_P46_whole_brain-segmentation-longitudinal.LayoutXML
 
-#Segmentaion Values: 
+#### 2. Segmentations - CBSTOOLS - separate WM – GM – CSF 
+
+02_P46_CSF_GM_WM_segmentations.LayoutXML
+
+# Segmentaion Values: 
 
 CSF 9.5-18.5
 GM 24.0 – 44.0
 WM 45.0 – 49.0
 
-#### 3. T1 to MNI transformation and mapping (03_P46_longitudinal-linear-coregistration-MP2RAGE.LayoutXML)
+#### 3. T1 to group_space transformation and mapping 
 
-#### 4. Correct fieldmaps (04_reconstruct_phase_flash_gre_from_mrincoming_folder.sh)
+03_P46_longitudinal-linear-coregistration-MP2RAGE.LayoutXML
+
+#### 4. Correct fieldmaps 
+
+04_reconstruct_phase_flash_gre_from_mrincoming_folder.sh
+
 # fieldmaps needed to be corrected into another range
 
-#### 5. Invert mapping MNI to T1 - CBSTOOLS - (05_P46_longitudinal-linear-coregistration-invert-mapping-to-qT1.LayoutXML)
+#### 5. Invert mapping group_avg to T1 - CBSTOOLS - 
 
-#### 6-10. Motion Correction + Fieldmap unwarping + Median & TSNR calculations – NIPYPE (06_ST_Moco_Fmap_Corr_Test_P46_d0.py) (07_ST...py,08_ST...py,09_ST...py,10_ST...py)
+05_P46_longitudinal-linear-coregistration-invert-mapping-to-qT1.LayoutXML
 
-#### 11. Mappings- CBSTOOLS – RS2QT1 + QT12RS - (11_P46_contrast-coregistration-rsfMRI-d0-d6.LayoutXML)
+#### 6-10. Motion Correction + Fieldmap unwarping + Median & TSNR calculations – NIPYPE 
 
-#### 12. Correct segmentations 1- CBSTOOLS - transfer TSNR image into MNI space (to multiply with WM mask) - 12_P46_background_correction_layout.LayoutXML
+06_ST_Moco_Fmap_Corr_Test_P46_d0.py
+07_ST_Moco_Fmap_Corr_Test_P46_d1.py
+08_ST_Moco_Fmap_Corr_Test_P46_d2.py
+09_ST_Moco_Fmap_Corr_Test_P46_d5.py
+10_ST_Moco_Fmap_Corr_Test_P46_d6.py
 
-#### 13. Correct segmentations 2 – FSL – TERMINAL - (brain extract TSNR – threshold TSNR with val 10 – then multiply with WM mask (13_bet_tsnr_mul_script)
+#### 11. Mappings- CBSTOOLS – RS2QT1 + QT12RS - 
 
-#### 14. Make averages  -  CBSTOOLS - (14_P46_longitudinal-linear-coregistration-rsfMRI_new.LayoutXML)
+11_P46_contrast-coregistration-rsfMRI-d0-d6.LayoutXML
 
-#### 15. Invert Mapping mni2rsfmri – CBSTOOLS - (15_P46_longitudinal-linear-coregistration-invert-mapping-to-rsfMRI.LayoutXML)
+#### 12. Correct segmentations 1- CBSTOOLS - transfer TSNR image into group_avg space (to multiply with WM mask) 
 
-#### 16. Transform Segmentations to rsfmri space to prepare for nuisance regression – CBSTOOLS - (16_P46_masks2rsfmri_apply_deformations_Layout1.LayoutXML)
+12_P46_background_correction_layout.LayoutXML
 
-#### 17. Nuisance Regression – NIPYPE -  (17_preproc_nuisance_regress_P46.py) 
+#### 13. Correct segmentations 2 – FSL – TERMINAL - brain extract TSNR – threshold TSNR with val 10 – then multiply with WM mask 
 
-#### 18.-26 fastECM (22_ECM_loop_d0.m) (19_ECM...m, 20_ECM...m, 21_ECM...m, 22_ECM...m)
+13_bet_tsnr_mul_script
 
-#### 19. avgqt1mni2group_avg mapping (27_P46_coreg_avgqt1mni2group_avg.LayoutXML)
+#### 14. Make averages  -  CBSTOOLS  
 
-#### 20. fastECM2group_avg transform (28_P46_rsfmri2avg_mni_transformation_and_fastECM2group_space_coreg.LayoutXML)
+14_P46_longitudinal-linear-coregistration-rsfMRI_new.LayoutXML
 
-#### 21. Smoothing 
+#### 15. Invert Mapping group_avg2rsfmri – CBSTOOLS  
 
-flsmaths <in> -s 2.4 <out>   
+15_P46_longitudinal-linear-coregistration-invert-mapping-to-rsfMRI.LayoutXML
+
+#### 16. Transform Segmentations to rsfmri space to prepare for nuisance regression – CBSTOOLS 
+
+16_P46_masks2rsfmri_apply_deformations_Layout1.LayoutXML
+
+#### 17. Nuisance Regression – NIPYPE - all relevant scripts for denoising can be found in functions.py 
+
+17_preproc_nuisance_regress_P46.py
+
+
+#### 17b. Smoothing 
+
+flsmaths <in_corr_timeseries> -s 2.4 <out_smoothed_timeseries>   
+
+#### 18.-22 fastECM 
+
+18_ECM_loop_d0.m 
+19_ECM_loop_d1.m
+20_ECM_loop_d2.m
+21_ECM_loop_d5.m
+22_ECM_loop_d6.m
+
+
+#### 23. avgqt1group_avg2mni mapping 
+
+23_P46_coreg_avgqt1mni2group_avg.LayoutXML
+
+#### 24. fastECM2mni transform 
+
+24_P46_rsfmri2avg_mni_transformation_and_fastECM2group_space_coreg.LayoutXML)
